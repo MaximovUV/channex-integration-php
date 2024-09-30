@@ -25,5 +25,8 @@
             "email": "greed_nord@mail.ru"
         }
     ],
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "license": [
+        "GPL-3.0-or-later"
+    ]
 }
