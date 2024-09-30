@@ -3,10 +3,10 @@
     "description": "integration for channex",
     "type": "library",
     "require": {
-        "guzzlehttp/guzzle": "^7.9"
+        "guzzlehttp/guzzle": "^7.4.2"
     },
     "require-dev": {
-        "guzzlehttp/guzzle": "^7.9",
+        "guzzlehttp/guzzle": "^7.4.2",
         "phpunit/phpunit": "^11.3"
     },
     "autoload": {
