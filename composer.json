@@ -1,0 +1,29 @@
+{
+    "name": "difight/channex-php-integration",
+    "description": "integration for channex",
+    "type": "library",
+    "require": {
+        "guzzlehttp/guzzle": "^7.9"
+    },
+    "require-dev": {
+        "guzzlehttp/guzzle": "^7.9",
+        "phpunit/phpunit": "^11.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Difight\\ChannexPhpIntegration\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Difight\\ChannexPhpIntegration\\test\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Andrey Bashkirev",
+            "email": "greed_nord@mail.ru"
+        }
+    ],
+    "minimum-stability": "stable"
+}
