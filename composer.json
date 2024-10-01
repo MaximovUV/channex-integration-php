@@ -11,12 +11,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Difight\\ChannexPhpIntegration\\": "src/"
+            "ChannexIntegration\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Difight\\ChannexPhpIntegration\\test\\": "tests/"
+            "ChannexIntegration\\test\\": "tests/"
         }
     },
     "authors": [
