@@ -38,12 +38,28 @@ class Init {
     }
   }
 
+  public function getPropertiesList():mixed {
+    return $this->getApiInfo("GET", 'properties');
+  }
+
+  public function getPropertyById(string $id):mixed {
+    return $this->getApiInfo("GET", 'properties.'.(string)$id);
+  }
+
+  public function createProperty(mixed $data):mixed {
+    return $this->getApiInfo("POST", 'properties', ['property' => $data]);
+  }
+
+  public function updateProperty(mixed $data):mixed {
+    return $this->getApiInfo("PUT", 'properties', ['property' => $data]);
+  }
+
   public function getGroupsList():mixed {
     return $this->getApiInfo("GET", 'groups');
   }
 
   public function createGroup(mixed $group):mixed {
-    return $this->getApiInfo("POST", 'groups', $group);
+    return $this->getApiInfo("POST", 'groups', ['group' => $group]);
   }
 
   public function deleteGroup(int $id):mixed {
@@ -59,11 +75,11 @@ class Init {
   }
 
   public function createRoomType(mixed $data):mixed {
-    return $this->getApiInfo("POST", 'room_types', $data);
+    return $this->getApiInfo("POST", 'room_types', ['room_type' => $data]);
   }
 
   public function updateRoomType(int $id, mixed $data):mixed {
-    return $this->getApiInfo("PUT", 'room_types/'.(string)$id, $data);
+    return $this->getApiInfo("PUT", 'room_types/'.(string)$id, ['room_type' => $data]);
   }
 
   public function removeRoomType(int $id):mixed {
