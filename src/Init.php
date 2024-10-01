@@ -3,11 +3,15 @@ namespace ChannexIntegration;
 
 use Exception;
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\RequestOptions;
 class Init {
   private string $accessToken;
   private bool $isStaging;
   private string $url;
   private array $headers;
+
+  const TIMEOUT = 5;
   public function __construct(string $accessToken, bool $isStaging = false)  {
     if (!$accessToken) {
       throw new Exception('Access token not set');
@@ -32,7 +36,8 @@ class Init {
   private function getApiInfo(string $method, string $urlMethod, array $body = [], bool $getAllPage = false) {
     try{
       $client = new Client();
-      $res = $client->request($method, (string)$this->url . '/' . $urlMethod, ['headers' => $this->headers, 'body' => $body]);
+      $request = new Request($method, (string)$this->url . $urlMethod, $this->headers, json_encode($body));
+      $res = $client->send($request, ['timeout' => self::TIMEOUT]);
       $this->checkErrors($res->getStatusCode());
       $response = json_decode($res->getBody());
       $this->checkResponse($response);
