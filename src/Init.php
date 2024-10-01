@@ -1,5 +1,8 @@
 <?php
 namespace ChannexIntegration;
+
+use Exception;
+use GuzzleHttp\Client;
 class Init {
   private string $accessToken;
   private bool $isStaging;
@@ -7,7 +10,7 @@ class Init {
   private array $headers;
   public function __construct(string $accessToken, bool $isStaging = false)  {
     if (!$accessToken) {
-      throw new Error('Access token not set');
+      throw new Exception('Access token not set');
     }
     $this->accessToken = $accessToken;
     $this->isStaging = $isStaging;
@@ -28,14 +31,14 @@ class Init {
 
   private function getApiInfo(string $method, string $urlMethod, array $body = [], bool $getAllPage = false) {
     try{
-      $client = new GuzzleHttp\Client();
+      $client = new Client();
       $res = $client->request($method, (string)$this->url . '/' . $urlMethod, ['headers' => $this->headers, 'body' => $body]);
       $this->checkErrors($res->getStatusCode());
       $response = json_decode($res->getBody());
       $this->checkResponse($response);
       return $response;
-    } catch(Throwable $e) {
-      throw new Error($e->getMessage());
+    } catch(Exception $e) {
+      throw new Exception($e->getMessage());
     }
   }
 
@@ -89,7 +92,7 @@ class Init {
 
   private function checkResponse(mixed $data) {
     if (isset($data->errors) && isset($data->errors->title)) {
-      throw new Error($data->errors->title);
+      throw new Exception($data->errors->title);
     }
   }
 
@@ -98,17 +101,17 @@ class Init {
       case 200:
         break;
       case 400:
-        throw new Error('The request was unacceptable, often due to missing a required parameter.');
+        throw new Exception('The request was unacceptable, often due to missing a required parameter.');
       case 401:
-        throw new Error('No valid Bearer token provided.');
+        throw new Exception('No valid Bearer token provided.');
       case 403:
-        throw new Error('Access forbidden.');
+        throw new Exception('Access forbidden.');
       case 404:
-        throw new Error('The requested resource doesn`t exist.');
+        throw new Exception('The requested resource doesn`t exist.');
       case 422:
-        throw new Error('Validation Error.');
+        throw new Exception('Validation Error.');
       default:
-        throw new Error('Unknown code response');
+        throw new Exception('Unknown code response');
     }
   }
 }
