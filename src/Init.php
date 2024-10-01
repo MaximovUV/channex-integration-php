@@ -1,4 +1,5 @@
 <?php
+namespace ChannexIntegration;
 class Init {
   private string $accessToken;
   private bool $isStaging;
