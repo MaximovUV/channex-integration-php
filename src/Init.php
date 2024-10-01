@@ -1,7 +1,4 @@
 <?php
-
-use PHPUnit\Util\Json;
-
 class Init {
   private string $accessToken;
   private bool $isStaging;
