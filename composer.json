@@ -1,5 +1,5 @@
 {
-    "name": "difight/channex-php-integration",
+    "name": "maximovuv/channex-integration-php",
     "description": "integration for channex",
     "type": "library",
     "require": {
