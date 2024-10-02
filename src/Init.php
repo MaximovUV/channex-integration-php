@@ -4,8 +4,8 @@ namespace ChannexIntegration;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\RequestOptions;
-class Init {
+
+final class Init {
   private string $accessToken;
   private bool $isStaging;
   private string $url;
@@ -33,34 +33,22 @@ class Init {
     $this->headers['user-api-key'] = $this->accessToken;
   }
 
-  private function getApiInfo(string $method, string $urlMethod, array $body = [], bool $getAllPage = false) {
+  public function getApiInfo(string $method, string $urlMethod, ?array $body = null, bool $getAllPage = false) {
     try{
-      $client = new Client();
+      $client = new Client(
+        [
+          'headers' => [ 'Content-Type' => 'application/json' ]
+        ]
+      );
       $request = new Request($method, (string)$this->url . $urlMethod, $this->headers, json_encode($body));
       $res = $client->send($request, ['timeout' => self::TIMEOUT]);
       $this->checkErrors($res->getStatusCode());
-      $response = json_decode($res->getBody());
+      $response = json_decode($res->getBody(), true);
       $this->checkResponse($response);
       return $response;
     } catch(Exception $e) {
       throw new Exception($e->getMessage());
     }
-  }
-
-  public function getPropertiesList():mixed {
-    return $this->getApiInfo("GET", 'properties');
-  }
-
-  public function getPropertyById(string $id):mixed {
-    return $this->getApiInfo("GET", 'properties.'.(string)$id);
-  }
-
-  public function createProperty(mixed $data):mixed {
-    return $this->getApiInfo("POST", 'properties', ['property' => $data]);
-  }
-
-  public function updateProperty(mixed $data):mixed {
-    return $this->getApiInfo("PUT", 'properties', ['property' => $data]);
   }
 
   public function getGroupsList():mixed {
@@ -104,6 +92,8 @@ class Init {
   private function checkErrors(int $status) {
     switch($status) {
       case 200:
+        break;
+      case 201:
         break;
       case 400:
         throw new Exception('The request was unacceptable, often due to missing a required parameter.');
