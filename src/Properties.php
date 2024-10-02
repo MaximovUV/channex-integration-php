@@ -19,8 +19,8 @@ final class Properties extends Channex {
     return $this->apiConnect->getApiInfo("POST", 'properties', ['property' => $data]);
   }
 
-  public function update(mixed $data):mixed {
-    return $this->apiConnect->getApiInfo("PUT", 'properties', ['property' => $data]);
+  public function update(string $id, mixed $data):mixed {
+    return $this->apiConnect->getApiInfo("PUT", 'properties/'.(string)$id, ['property' => $data]);
   }
 
   public function remove(string $id = null):mixed {

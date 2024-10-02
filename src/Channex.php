@@ -12,6 +12,6 @@ abstract class Channex {
   }
   abstract public function get(?string $id = null);
   abstract public function create(array $data);
-  abstract public function update(array $data);
+  abstract public function update(string $id, array $data);
   abstract public function remove(string $id = null);
 }
