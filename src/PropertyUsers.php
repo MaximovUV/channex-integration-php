@@ -9,19 +9,24 @@ final class PropertyUsers extends Channex {
   }
 
   public function get(string $id = null) {
-        return $this->apiConnect->getApiInfo("GET", 'property_users/filter[property_id]='.(string)$id);
+        if ($id) {
+            return $this->apiConnect->getApiInfo("GET", 'property_users/'.(string)$id);
+        } else {
+            return $this->apiConnect->getApiInfo("GET", 'property_users/');
+        }
+        
   }
 
   public function create(array $data):mixed {
-      return $this->apiConnect->getApiInfo("POST", 'property_users', ['invite' => $data]);
+        return $this->apiConnect->getApiInfo("POST", 'property_users', ['invite' => $data]);
   }
 
   public function update(string $id, mixed $data):mixed {
-      return $this->apiConnect->getApiInfo("PUT", 'property_users/'.(string)$id, ['property_user' => $data]);
+        return $this->apiConnect->getApiInfo("PUT", 'property_users/'.(string)$id, ['property_user' => $data]);
   }
 
   public function remove(string $id = null):mixed {
-      return $this->apiConnect->getApiInfo("DELETE", 'room_types/'.(string)$id);
+        return $this->apiConnect->getApiInfo("DELETE", 'room_types/'.(string)$id);
   }
 
 }
