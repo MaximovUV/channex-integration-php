@@ -22,6 +22,10 @@ final class Init {
     $this->initHeader();
   }
 
+  public function getCurrentUrl() {
+    return $this->url;
+  }
+
   private function initUrl() {
     $this->url = 'https://staging.channex.io/api/v1/';
     if ($this->isStaging) {
@@ -40,7 +44,7 @@ final class Init {
           'headers' => [ 'Content-Type' => 'application/json' ]
         ]
       );
-      $request = new Request($method, (string)$this->url . $urlMethod, $this->headers, json_encode($body));
+      $request = new Request($method, (string)$this->getCurrentUrl() . $urlMethod, $this->headers, json_encode($body));
       $res = $client->send($request, ['timeout' => self::TIMEOUT]);
       $this->checkErrors($res->getStatusCode());
       $response = json_decode($res->getBody(), true);
