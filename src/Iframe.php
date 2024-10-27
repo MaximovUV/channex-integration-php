@@ -20,7 +20,7 @@ final class Iframe extends Channex {
     $tokenData = $this->getOneTimeAccessToken($data);
     if ($tokenData && isset($tokenData['data']['token'])) {
         $token = $tokenData['data']['token'];
-        $iframeCode = "<iframe src='".$this->url.'auth/exchange?oauth_session_key='.$token.'&app_mode=headless&redirect_to=/channels&property_id='.$data['property_id'].'&channels='.$code."></iframe>";
+        $iframeCode = $this->url.'auth/exchange?oauth_session_key='.$token.'&app_mode=headless&redirect_to=/channels&property_id='.$data['property_id'].'&channels='.$code;
     }
     return $iframeCode;
   }
