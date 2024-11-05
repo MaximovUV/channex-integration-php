@@ -27,7 +27,7 @@ final class Init {
   }
 
   private function initUrl() {
-    $this->url = 'https://staging.channex.io/api/v1/';
+    $this->url = 'https://secure.channex.io/api/v1/';
     if ($this->isStaging) {
       $this->url = 'https://staging.channex.io/api/v1/';
     }
@@ -37,14 +37,17 @@ final class Init {
     $this->headers['user-api-key'] = $this->accessToken;
   }
 
-  public function getApiInfo(string $method, string $urlMethod, ?array $body = null, bool $getAllPage = false) {
+  public function getApiInfo(string $method, string $urlMethod, ?array $body = null, ?array $filter = [], ?int $page = 0, ?int $limit = 0)  {
     try{
       $client = new Client(
         [
           'headers' => [ 'Content-Type' => 'application/json' ]
         ]
       );
-      $request = new Request($method, (string)$this->getCurrentUrl() . $urlMethod, $this->headers, json_encode($body));
+      
+      $pageStr = $this->addGetMethod($filter, $page, $limit);
+
+      $request = new Request($method, (string)$this->getCurrentUrl() . $urlMethod. $pageStr, $this->headers, json_encode($body));
       $res = $client->send($request, ['timeout' => self::TIMEOUT]);
       $this->checkErrors($res->getStatusCode());
       $response = json_decode($res->getBody(), true);
@@ -55,36 +58,28 @@ final class Init {
     }
   }
 
-  public function getGroupsList():mixed {
-    return $this->getApiInfo("GET", 'groups');
-  }
-
-  public function createGroup(mixed $group):mixed {
-    return $this->getApiInfo("POST", 'groups', ['group' => $group]);
-  }
-
-  public function deleteGroup(int $id):mixed {
-    return $this->getApiInfo("DELETE", 'groups/'.(string)$id);
-  }
-
-  public function getRoomTypesList():mixed {
-    return $this->getApiInfo("GET", 'room_types');
-  }
-
-  public function getRoomTypesListID(int $id):mixed {
-    return $this->getApiInfo("GET", 'room_types/'.(string)$id);
-  }
-
-  public function createRoomType(mixed $data):mixed {
-    return $this->getApiInfo("POST", 'room_types', ['room_type' => $data]);
-  }
-
-  public function updateRoomType(int $id, mixed $data):mixed {
-    return $this->getApiInfo("PUT", 'room_types/'.(string)$id, ['room_type' => $data]);
-  }
-
-  public function removeRoomType(int $id):mixed {
-    return $this->getApiInfo("DELETE", 'room_types/'.(string)$id);
+  public function addGetMethod(array $filter=[], int $page = 0, int $limit = 0) {
+    $pageStr = '';
+    if ($page) {
+      $pageStr = '?pagination[page]='.(string) $page;
+    }
+    if ($limit) {
+        if ($pageStr) {
+          $pageStr .= '&pagination[limit]='.(string) $limit;
+        } else {
+          $pageStr = '?pagination[limit]='.(string) $limit;
+        }
+    }
+    if ($filter) {
+      foreach($filter as $name => $value) {
+        if ($pageStr) {
+          $pageStr .= '&filter['.(string)$name.']='.(string) $value;
+        } else {
+          $pageStr = '?filter['.(string)$name.']='.(string) $value;
+        }
+      }
+    }
+    return $pageStr;
   }
 
   private function checkResponse(mixed $data) {
