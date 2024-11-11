@@ -8,13 +8,13 @@ final class PropertyUsers extends Channex {
       parent::__construct($init);
   }
 
-  public function get(string $id = null) {
+  public function get(?string $id = null, ?array $filter = [], ?int $page = 0, ?int $limit = 0) {
         if ($id) {
             return $this->apiConnect->getApiInfo("GET", 'property_users/'.(string)$id);
         } else {
             return $this->apiConnect->getApiInfo("GET", 'property_users/');
         }
-        
+
   }
 
   public function create(array $data):mixed {

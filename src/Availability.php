@@ -8,7 +8,7 @@ final class Availability extends Channex {
       parent::__construct($init);
   }
 
-  public function get(?string $id = null) {
+  public function get(?string $id = null, ?array $filter = [], ?int $page = 0, ?int $limit = 0) {
       return;
   }
 

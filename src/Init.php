@@ -44,7 +44,7 @@ final class Init {
           'headers' => [ 'Content-Type' => 'application/json' ]
         ]
       );
-      
+
       $pageStr = $this->addGetMethod($filter, $page, $limit);
 
       $request = new Request($method, (string)$this->getCurrentUrl() . $urlMethod. $pageStr, $this->headers, json_encode($body));

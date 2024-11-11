@@ -10,7 +10,7 @@ final class Booking extends Channex {
 
   public function get(?string $id = null, ?array $filter = [], ?int $page = 0, ?int $limit = 0) {
     if (!$id) {
-        return $this->apiConnect->getApiInfo("GET", 'booking_revisions/feed', null, $filter, $page, $limit);
+        return $this->apiConnect->getApiInfo("GET", 'booking_revisions', null, $filter, $page, $limit);
     } else {
         return $this->apiConnect->getApiInfo("GET", 'booking_revisions/'.(string)$id, null, $filter, $page, $limit);
     }
