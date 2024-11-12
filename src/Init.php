@@ -27,9 +27,9 @@ final class Init {
   }
 
   private function initUrl() {
-    $this->url = 'https://secure.channex.io/api/v1/';
+    $this->url = 'https://secure.channex.io/';
     if ($this->isStaging) {
-      $this->url = 'https://staging.channex.io/api/v1/';
+      $this->url = 'https://staging.channex.io/';
     }
   }
 
@@ -47,7 +47,7 @@ final class Init {
 
       $pageStr = $this->addGetMethod($filter, $page, $limit);
 
-      $request = new Request($method, (string)$this->getCurrentUrl() . $urlMethod. $pageStr, $this->headers, json_encode($body));
+      $request = new Request($method, (string)$this->getCurrentUrl() .'api/v1/'. $urlMethod. $pageStr, $this->headers, json_encode($body));
       $res = $client->send($request, ['timeout' => self::TIMEOUT]);
       $this->checkErrors($res->getStatusCode());
       $response = json_decode($res->getBody(), true);
