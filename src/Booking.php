@@ -32,4 +32,8 @@ final class Booking extends Channex {
     return  $this->apiConnect->getApiInfo("POST", 'booking_revisions/'.(string)$id.'/ack');
   }
 
+  public function feed(?array $filter = [], ?int $page = 0, ?int $limit = 0):mixed {
+    return $this->apiConnect->getApiInfo("GET", 'booking_revisions/feed', null, $filter, $page, $limit);
+  }
+
 }
