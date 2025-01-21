@@ -27,7 +27,7 @@ final class Init {
   }
 
   private function initUrl() {
-    $this->url = 'https://secure.channex.io/';
+    $this->url = 'https://app.channex.io/';
     if ($this->isStaging) {
       $this->url = 'https://staging.channex.io/';
     }
